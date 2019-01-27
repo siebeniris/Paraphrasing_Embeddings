@@ -86,11 +86,17 @@ Mean Precision: 0.566
 Mean Recall: 0.720
 Mean F1: 0.633
 
-Word2Vec Model using both entity_pair and entity embeddings (30 epochs, Adam 0.01)
+Universal Schema using both entity_pair and entity embeddings (30 epochs, Adam lr=0.01, batchsize 4096)
 Results based on cross validation on 3983 samples with 5 folds.
-Mean Precision: 0.523
-Mean Recall: 0.698
-Mean F1: 0.598
+Mean Precision: 0.479
+Mean Recall: 0.753
+Mean F1: 0.586
+
+Word2Vec Model using both entity_pair and entity embeddings (40 epochs, Adam 0.01, batch size 4096)
+Results based on cross validation on 3983 samples with 5 folds.
+Mean Precision: 0.513
+Mean Recall: 0.727
+Mean F1: 0.600
 ```
 
 ### remarks:
