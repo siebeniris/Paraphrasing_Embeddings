@@ -1,13 +1,12 @@
-#!/usr/bin/python3
-
 import csv
-from gensim.models import KeyedVectors
 import re
 import sys
+
+import numpy as np
+from gensim.models import KeyedVectors
 from sklearn.model_selection import cross_val_score, StratifiedKFold
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.metrics import precision_recall_curve
-import numpy as np
 from nltk.corpus import stopwords
 
 

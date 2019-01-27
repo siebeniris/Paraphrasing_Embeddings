@@ -1,4 +1,3 @@
-
 import torch.optim as optim
 
 lr = [0.1, 0.01, 0.001]

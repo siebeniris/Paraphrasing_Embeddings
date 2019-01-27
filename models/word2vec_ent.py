@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+
 class Word2Vec(nn.Module):
     def __init__(self, entpair_size, path_size, ent_size, embed_size):
         super(Word2Vec, self).__init__()
@@ -35,6 +36,6 @@ class Word2Vec(nn.Module):
 
         pos_prediction = torch.bmm(pos_vecs, paths_vecs)
         neg_prediction = torch.bmm(neg_vecs, paths_vecs)
-        #print(scores.view(-1,1))
+
         pos_score, neg_score =pos_prediction.view(-1,1), neg_prediction.view(-1,1)
         return pos_score, neg_score

@@ -13,17 +13,14 @@ class UniModel(nn.Module):
         # with mean 0 and variance 0.1
         self.embeddings_entities.weight.data.normal_(mean=0, std=0.1)
         self.embeddings_paths.weight.data.normal_(mean=0, std=0.1)
-        self.relu = nn.ReLU()
 
     def forward(self, ents_path_idxs):
         pos_idxs= ents_path_idxs[:,1]  # (batch_size,1)
         neg_idxs = ents_path_idxs[:,2]  # (batch_size, 1)
 
-        # bring the ents embeddings into the required shape for torch.bmm
         ent0_vecs = self.embeddings_entities(pos_idxs)
         ent1_vecs = self.embeddings_entities(neg_idxs)
 
-        # print(ents_idxs.size())
         pos_vecs = ent0_vecs.view(-1, 1, self.embed_size)
         neg_vecs = ent1_vecs.view(-1,1,self.embed_size)
 

@@ -12,7 +12,6 @@ class Word2Vec(nn.Module):
         # initialize embeddings, normally distributed.
         self.embeddings_entities.weight.data.normal_(mean=0, std=0.1)
         self.embeddings_paths.weight.data.normal_(mean=0, std=0.1)
-        # self.lstm = nn.LSTM(input_size=)
 
 
     def forward(self, ents_path_idxs):
@@ -20,18 +19,13 @@ class Word2Vec(nn.Module):
         print(pos_idxs)
         neg_idxs = ents_path_idxs[:,2]  # (batch_size, 1)
 
-        # bring the ents embeddings into the required shape for torch.bmm
         pos_vecs = self.embeddings_entities(pos_idxs)
-
         neg_vecs = self.embeddings_entities(neg_idxs)
 
-        # print(ents_idxs.size())
         pos_vecs = pos_vecs.view(-1, 1, self.embed_size)
         neg_vecs = neg_vecs.view(-1,1,self.embed_size)
 
         path_idxs = ents_path_idxs[:,0]
-
-
 
         # bring the paths embeddings into the required shape
         # for torch.bmm
@@ -39,6 +33,6 @@ class Word2Vec(nn.Module):
 
         pos_prediction = torch.bmm(pos_vecs, paths_vecs)
         neg_prediction = torch.bmm(neg_vecs, paths_vecs)
-        #print(scores.view(-1,1))
+
         pos_score, neg_score =pos_prediction.view(-1,1), neg_prediction.view(-1,1)
         return pos_score, neg_score

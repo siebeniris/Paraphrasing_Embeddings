@@ -19,7 +19,7 @@ log = open("experiments/log_unimodel_ent.txt","a")
 
 model = UniModel(entpair_size=len(entpair2id), path_size=len(path2id), ent_size=len(ent2id), embed_size=300)
 optimizer = optim.Adam(model.parameters(), lr=0.01)
-num_epoch = 20
+num_epoch = 40
 batch_size = 4096
 log.write(str(num_epoch) + "\n")
 

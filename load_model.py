@@ -1,6 +1,7 @@
+import json
 
 import torch
-import json
+
 
 def load_state_dict(model, path, path2id, output):
     model.load_state_dict(torch.load(path))
@@ -40,12 +41,12 @@ if __name__ == '__main__':
         model= Word2Vec(len(entpair2id), len(path2id), len(ent2id), embed_size=300)
     elif m=="uni_ent":
         from models.uni_model_ent import UniModel
-        model=UniModel(len(entpair2id), len(path2id), len(ent2id), embed_size=300)
+        model=UniModel(len(entpair2id),  len(ent2id),len(path2id), embed_size=300)
     else:
         from models.seq_model import SeqModel
         model = SeqModel(len(entpair2id), len(path2id), embed_size=300)
 
-    path ="experiments/word2vec_ent/adam_0.01_20_4096_model.pt"
+    path ="experiments/word2vec_ent/adam_0.001_40_4096_model.pt"
 
     output = path+"_embeddings.csv"
 

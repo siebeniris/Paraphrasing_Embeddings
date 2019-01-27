@@ -12,13 +12,9 @@ entpair2id = json.load(fp=open(dir + "entpair2id.json"))
 path2id = json.load(fp=open(dir + "path2id.json"))
 
 exp_dir = "experiments/"
-
 word2vec_dir = exp_dir +"word2vec/"
 
-
 log = open("experiments/log_word2vec.txt","a")
-
-
 
 model = Word2Vec(ent_size=len(entpair2id), path_size=len(path2id), embed_size=300)
 optimizer = optim.SGD(model.parameters(), lr=0.01)

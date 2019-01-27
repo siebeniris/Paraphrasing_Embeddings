@@ -7,7 +7,7 @@ def data_generator_(dir, entpair2id, path2id, ent2id):
     """
     data generator for models use both entity embeddings and entity_pair embeddings.
     dobj^-___join___nsubj m.0_00#m.01gf5z m.0ftxc#m.02mjmr
-    path                   pos_entspair    neg_entspair
+    path                   pos_entspair    neg_entspair    pos_ent0  pos_ent1  neg_ent2 neg_ent3
     """
     with open(dir+"path_pos_neg.txt") as f:
 
