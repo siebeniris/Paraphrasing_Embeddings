@@ -60,7 +60,8 @@ number of entities: 19396
 ```
 
 ### results:
-the learned word embeddings are in folder `experiments/xxmodel/...embeddings.csv`
+the learned word embeddings are in `experiments/xxmodel/xx_embeddings.csv`
+
 only present the best results from each experimented model
 ```text
 baseline `python evaluate relation_embeddings.txt test_simplified.csv`:
