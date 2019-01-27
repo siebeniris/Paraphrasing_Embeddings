@@ -45,6 +45,16 @@ train_word2vec_ent.py (train model from models/word2vec_ent.py)
 
 3. run `preprocessing/rank_pairs.py` to do negative sampling on each `path positive_entity_pair` , negative sampling factor is 5. That means, for each `path positive_entity_pair`, there are five different `negative_entity_pair` which has not occur in `positive_entity_pair` corresponding to the `path`, but the entity pairs already occur in the dataset ==> get the data `data_/path_pos_neg.txt` for generating the train/dev dataset.
 
+* dataset :
+```
+train_data samples: 2031332
+dev_data samples: 20518 (1% of total samples)
+total number of samples: 2051850
+number of paths: 1714 (1717 in test_simplified.csv)
+number of entity pairs: 66835
+number of entities: 19396 
+```
+
 ### results:
 only present the best results from each experimented model
 ```text
