@@ -1,6 +1,10 @@
 # project_nlp_yiyichen
 nlp-roth, lmu 2019
 
+
+This repository only contains the codes for the project, the data is saved in `/big/b/beroth/abgaben/chenyi` in CIP-pool.
+
+
 ### the structure of folders of the whole project:
 
 ```
