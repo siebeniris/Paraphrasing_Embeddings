@@ -44,7 +44,9 @@ train_word2vec_ent.py (train model from models/word2vec_ent.py)
 1. deduplicated the given data `word2vec_train_untyped.txt`, and filtered the data so that it only contains the paths, entities which has the paths that occurs at least once in `test_simplified.csv` (given data) also `untypify` the `paths` using `filter_path`, to get `word2vec_train_untyped_unique_filtered.txt`.
 
 2. run `processing/main.py`to 
+
 2.1. get the frequency of entities `ent_freq.txt`, the frequency of path `path_freq.txt`
+
 2.2. use the frequency to filter out the data which contains the entities that occur at least twice to get the data which is used for generating train data and dev data `entities_path_filtered.txt`, `entpair2id.json`, `ent2id.json`, `path2id.json`.
 
 3. run `preprocessing/rank_pairs.py` to do negative sampling on each `path positive_entity_pair` , negative sampling factor is 5. That means, for each `path positive_entity_pair`, there are five different `negative_entity_pair` which has not occur in `positive_entity_pair` corresponding to the `path`, but the entity pairs already occur in the dataset ==> get the data `data_/path_pos_neg.txt` for generating the train/dev dataset.
