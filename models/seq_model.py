@@ -14,8 +14,8 @@ class SeqModel(nn.Module):
         self.embeddings_entities.weight.data.normal_(mean=0, std=0.1)
         self.embeddings_paths.weight.data.normal_(mean=0, std=0.1)
         self.relu = nn.ReLU()
-        # self.rnn = nn.LSTM(input_size=embed_size, hidden_size=100, num_layers=1, batch_first=True)
-        # self.rnn2 = nn.LSTM(input_size=100, hidden_size=50, num_layers=2, batch_first=True)
+        self.rnn = nn.LSTM(input_size=embed_size, hidden_size=100, num_layers=1, batch_first=True)
+        self.rnn2 = nn.LSTM(input_size=1, hidden_size=100, num_layers=2, batch_first=True)
         self.linear1 = nn.Linear(300,100)
         self.linear2 = nn.Linear(100,1)
         # self.conv1d = nn.Conv1d(in_channels=2, out_channels=100, kernel_size=1)
@@ -37,20 +37,20 @@ class SeqModel(nn.Module):
         pos_embeddings = torch.cat((pos_vecs, path_vecs),1)
         neg_embeedings = torch.cat((neg_vecs, path_vecs),1)
 
-        # pos_output = self.conv1d(pos_embeddings) # batch_size, out_channels, embed_size
-        # neg_output = self.conv1d(neg_embeedings)
+        pos_output, hn = self.rnn(pos_embeddings) # batch_size, out_channels, embed_size
+        neg_output,  hn = self.rnn(neg_embeedings)
 
-
-        # pos_output, hn = self.rnn2(pos_output)
-        # neg_output, hn = self.rnn2(neg_output)
-
-        pos_output = self.linear2(self.linear1(pos_embeddings))
-        neg_output = self.linear2(self.linear1(neg_embeedings))
+        pos_output = self.linear2(pos_output)
+        neg_output = self.linear2(neg_output)
 
         self.relu(pos_output)
         self.relu(neg_output)
-        pos_output = self.linear2(self.linear1(pos_embeddings))
-        neg_output = self.linear2(self.linear1(neg_embeedings))
+
+        pos_output, hn = self.rnn2(pos_output)  # batch_size, out_channels, embed_size
+        neg_output, hn = self.rnn2(neg_output)
+
+        pos_output = self.linear2(pos_output)
+        neg_output = self.linear2(neg_output)
 
         self.relu(pos_output)
         self.relu(neg_output)
