@@ -40,7 +40,7 @@ def train_model(model, dir, optimizer,num_epochs,
                     torch.ones(diff.size(), dtype = torch.float32)
                 loss = criterion(diff, label)
                 loss_accum +=loss
-                loss_dict["train"].append(loss_accum.detach().item()) # save gpu memory!
+
                 loss.backward()
                 optimizer.step()
 
@@ -52,8 +52,10 @@ def train_model(model, dir, optimizer,num_epochs,
                             torch.ones(diff.size(), dtype=torch.float32)
                         loss = criterion(diff, label)
                         dev_loss += loss
-                        loss_dict["dev"].append(dev_loss.detach().item())
+                loss_dict["dev"].append(dev_loss.detach().item()/len(dev_loader))
                 print("dev loss:", dev_loss)
+
+        loss_dict["train"].append(loss_accum.detach().item()/len(train_loader))  # save gpu memory!
         print("current loss:", loss_accum)
 
     torch.save(model.state_dict(),outputdir+name+"_model.pt")
@@ -99,7 +101,7 @@ def train_word2vec(model,dir, optimizer, num_epochs,
                 loss = pos_loss + neg_loss
                 loss_accum += loss
 
-                loss_dict["train"].append(loss_accum.detach().item())
+
                 loss.backward()
 
                 optimizer.step()
@@ -118,9 +120,10 @@ def train_word2vec(model,dir, optimizer, num_epochs,
 
                         loss = pos_loss + neg_loss
                         dev_loss += loss
-                        loss_dict["dev"].append(dev_loss.detach().item())
+                loss_dict["dev"].append(dev_loss.detach().item()/len(dev_loader))
 
                 print("dev loss:", dev_loss)
+        loss_dict["train"].append(loss_accum.detach().item()/len(train_loader))
         print("current loss:", loss_accum)
 
     torch.save(model.state_dict(), outputdir + name+"_model.pt")
@@ -168,7 +171,7 @@ def train_word2vec_ent(model,dir, optimizer, num_epochs,
                 loss = pos_loss + neg_loss
                 loss_accum += loss
 
-                loss_dict["train"].append(loss_accum.detach().item())
+
                 loss.backward()
 
                 optimizer.step()
@@ -187,9 +190,10 @@ def train_word2vec_ent(model,dir, optimizer, num_epochs,
 
                         loss = pos_loss + neg_loss
                         dev_loss += loss
-                        loss_dict["dev"].append(dev_loss.detach().item())
+                loss_dict["dev"].append(dev_loss.detach().item()/len(dev_loader))
 
                 print("dev loss:", dev_loss)
+        loss_dict["train"].append(loss_accum.detach().item()/len(train_loader))
         print("current loss:", loss_accum)
 
     torch.save(model.state_dict(), outputdir + name+"_model.pt")
@@ -229,7 +233,7 @@ def train_model_ent(model, dir, optimizer,num_epochs,
                     torch.ones(diff.size(), dtype = torch.float32)
                 loss = criterion(diff, label)
                 loss_accum +=loss
-                loss_dict["train"].append(loss_accum.detach().item()) # save gpu memory!
+
                 loss.backward()
                 optimizer.step()
 
@@ -241,9 +245,12 @@ def train_model_ent(model, dir, optimizer,num_epochs,
                             torch.ones(diff.size(), dtype=torch.float32)
                         loss = criterion(diff, label)
                         dev_loss += loss
-                        loss_dict["dev"].append(dev_loss.detach().item())
+                loss_dict["dev"].append(dev_loss.detach().item()/len(dev_loader))
                 print("dev loss:", dev_loss)
+        loss_dict["train"].append(loss_accum.detach().item()/len(train_loader))  # save gpu memory!
         print("current loss:", loss_accum)
 
     torch.save(model.state_dict(),outputdir+name+"_model.pt")
     plot_loss(loss_dict, outputdir + name + "_loss.png")
+    print(len(loss_dict["train"]))
+    print(len(loss_dict["dev"]))

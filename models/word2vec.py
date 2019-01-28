@@ -16,7 +16,6 @@ class Word2Vec(nn.Module):
 
     def forward(self, ents_path_idxs):
         pos_idxs= ents_path_idxs[:,1]  # (batch_size,1)
-        print(pos_idxs)
         neg_idxs = ents_path_idxs[:,2]  # (batch_size, 1)
 
         pos_vecs = self.embeddings_entities(pos_idxs)
