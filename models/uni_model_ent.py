@@ -14,6 +14,7 @@ class UniModel(nn.Module):
         # with mean 0 and variance 0.1
         self.embeddings_entities.weight.data.normal_(mean=0, std=0.1)
         self.embeddings_paths.weight.data.normal_(mean=0, std=0.1)
+        self.embeddings_entity.weight.data.normal_(mean=0, std=0.1)
 
     def forward(self, ents_path_idxs):
         pos_idxs= ents_path_idxs[:,1]  # (batch_size,1)

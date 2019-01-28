@@ -13,6 +13,7 @@ class Word2Vec(nn.Module):
         # initialize embeddings, normally distributed.
         self.embeddings_entities.weight.data.normal_(mean=0, std=0.1)
         self.embeddings_paths.weight.data.normal_(mean=0, std=0.1)
+        self.embeddings_entity.weight.data.normal_(mean=0, std=0.1)
         # self.lstm = nn.LSTM(input_size=)
 
 
