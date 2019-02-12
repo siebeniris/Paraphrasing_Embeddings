@@ -23,10 +23,10 @@ class UniModel(nn.Module):
 
         pos_vecs = ent0_vecs.view(-1, 1, self.embed_size)
         neg_vecs = ent1_vecs.view(-1,1,self.embed_size)
-
         path_idxs = ents_path_idxs[:,0]
         path_vecs = self.embeddings_paths(path_idxs)
         path_vecs = path_vecs.view(-1,self.embed_size,1)
+
 
         positive_predictions = torch.bmm(pos_vecs, path_vecs)
         negative_predictions = torch.bmm(neg_vecs, path_vecs)

@@ -31,6 +31,9 @@ def train_model(model, dir, optimizer,num_epochs,
     loss_dict = {"train":[], "dev":[]}
     for epoch_nr in range(num_epochs):
         loss_accum = 0.0
+
+        dev_loss_ = []
+
         print("epoch", epoch_nr)
         for line in train_loader:
             for path_pos_neg in line:
@@ -44,7 +47,7 @@ def train_model(model, dir, optimizer,num_epochs,
                 loss.backward()
                 optimizer.step()
 
-                dev_loss= 0.0
+                dev_loss = 0.0
                 for line in dev_loader:
                     for path_pos_neg in line:
                         diff = model.forward(path_pos_neg)
@@ -52,14 +55,20 @@ def train_model(model, dir, optimizer,num_epochs,
                             torch.ones(diff.size(), dtype=torch.float32)
                         loss = criterion(diff, label)
                         dev_loss += loss
-                loss_dict["dev"].append(dev_loss.detach().item()/len(dev_loader))
-                print("dev loss:", dev_loss)
 
-        loss_dict["train"].append(loss_accum.detach().item()/len(train_loader))  # save gpu memory!
-        print("current loss:", loss_accum)
+                dev_loss_.append(dev_loss.detach().item() / len(dev_loader))
+
+        dev_l = np.mean(dev_loss_)
+        print("current dev loss:", dev_l)
+        loss_dict['dev'].append(dev_l)
+
+        train_loss_ = loss_accum.detach().item()/ len(train_loader)
+        loss_dict["train"].append(train_loss_)  # save gpu memory!
+        print('train loss:', train_loss_)
 
     torch.save(model.state_dict(),outputdir+name+"_model.pt")
     plot_loss(loss_dict, outputdir + name + "_loss.png")
+
 
 
 def train_word2vec(model,dir, optimizer, num_epochs,
@@ -86,6 +95,8 @@ def train_word2vec(model,dir, optimizer, num_epochs,
     loss_dict = {"train":[], "dev":[]}
     for epoch_nr in range(num_epochs):
         loss_accum = 0.0
+        dev_loss_ = []
+
         print("epoch", epoch_nr)
         for line in train_loader:
             for path_pos_neg in line:
@@ -120,14 +131,17 @@ def train_word2vec(model,dir, optimizer, num_epochs,
 
                         loss = pos_loss + neg_loss
                         dev_loss += loss
-                loss_dict["dev"].append(dev_loss.detach().item()/len(dev_loader))
 
-                print("dev loss:", dev_loss)
+                dev_loss_.append(dev_loss.detach().item()/len(dev_loader))
+
+        dev_l = np.mean(dev_loss_)
+        print("current dev loss:", dev_l)
+        loss_dict['dev'].append(dev_l)
+
         loss_dict["train"].append(loss_accum.detach().item()/len(train_loader))
         print("current loss:", loss_accum)
 
     torch.save(model.state_dict(), outputdir + name+"_model.pt")
-
     plot_loss(loss_dict, outputdir+name+"_loss.png")
 
 
@@ -155,6 +169,8 @@ def train_word2vec_ent(model,dir, optimizer, num_epochs,
     loss_dict = {"train":[], "dev":[]}
     for epoch_nr in range(num_epochs):
         loss_accum = 0.0
+        dev_loss_ = []
+
         print("epoch", epoch_nr)
         for line in train_loader:
             for path_pos_neg in line:
@@ -171,9 +187,7 @@ def train_word2vec_ent(model,dir, optimizer, num_epochs,
                 loss = pos_loss + neg_loss
                 loss_accum += loss
 
-
                 loss.backward()
-
                 optimizer.step()
 
                 dev_loss= 0.0
@@ -190,14 +204,16 @@ def train_word2vec_ent(model,dir, optimizer, num_epochs,
 
                         loss = pos_loss + neg_loss
                         dev_loss += loss
-                loss_dict["dev"].append(dev_loss.detach().item()/len(dev_loader))
 
-                print("dev loss:", dev_loss)
+                dev_loss_.append(dev_loss.detach().item()/len(dev_loader))
+        dev_l = np.mean(dev_loss_)
+        print("current dev loss:", dev_l)
+        loss_dict['dev'].append(dev_l)
+
         loss_dict["train"].append(loss_accum.detach().item()/len(train_loader))
-        print("current loss:", loss_accum)
+        print("current loss:", loss_accum.detach().item()/len(train_loader))
 
     torch.save(model.state_dict(), outputdir + name+"_model.pt")
-
     plot_loss(loss_dict, outputdir+name+"_loss.png")
 
 
@@ -224,6 +240,8 @@ def train_model_ent(model, dir, optimizer,num_epochs,
     loss_dict = {"train":[], "dev":[]}
     for epoch_nr in range(num_epochs):
         loss_accum = 0.0
+        dev_loss_ =[]
+
         print("epoch", epoch_nr)
         for line in train_loader:
             for path_pos_neg in line:
@@ -245,12 +263,13 @@ def train_model_ent(model, dir, optimizer,num_epochs,
                             torch.ones(diff.size(), dtype=torch.float32)
                         loss = criterion(diff, label)
                         dev_loss += loss
-                loss_dict["dev"].append(dev_loss.detach().item()/len(dev_loader))
-                print("dev loss:", dev_loss)
+                dev_loss_.append(dev_loss.detach().item()/len(dev_loader))
+        dev_l = np.mean(dev_loss_)
+        print("current dev loss:", dev_l)
+        loss_dict['dev'].append(dev_l)
+
         loss_dict["train"].append(loss_accum.detach().item()/len(train_loader))  # save gpu memory!
-        print("current loss:", loss_accum)
+        print("current loss:", loss_accum.detach().item()/len(train_loader))
 
     torch.save(model.state_dict(),outputdir+name+"_model.pt")
     plot_loss(loss_dict, outputdir + name + "_loss.png")
-    print(len(loss_dict["train"]))
-    print(len(loss_dict["dev"]))

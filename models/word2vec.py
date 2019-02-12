@@ -34,4 +34,5 @@ class Word2Vec(nn.Module):
         neg_prediction = torch.bmm(neg_vecs, paths_vecs)
 
         pos_score, neg_score =pos_prediction.view(-1,1), neg_prediction.view(-1,1)
+        print(pos_score, neg_score)
         return pos_score, neg_score

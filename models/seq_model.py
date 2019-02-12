@@ -43,17 +43,17 @@ class SeqModel(nn.Module):
         pos_output = self.linear2(pos_output)
         neg_output = self.linear2(neg_output)
 
-        self.relu(pos_output)
-        self.relu(neg_output)
+        # self.relu(pos_output)
+        # self.relu(neg_output)
 
-        pos_output, hn = self.rnn2(pos_output)  # batch_size, out_channels, embed_size
-        neg_output, hn = self.rnn2(neg_output)
-
-        pos_output = self.linear2(pos_output)
-        neg_output = self.linear2(neg_output)
-
-        self.relu(pos_output)
-        self.relu(neg_output)
+        # pos_output, hn = self.rnn2(pos_output)  # batch_size, out_channels, embed_size
+        # neg_output, hn = self.rnn2(neg_output)
+        #
+        # pos_output = self.linear2(pos_output)
+        # neg_output = self.linear2(neg_output)
+        #
+        # self.relu(pos_output)
+        # self.relu(neg_output)
 
         diff = pos_output-neg_output
 
