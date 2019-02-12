@@ -72,11 +72,13 @@ Mean Precision: 0.471
 Mean Recall: 0.712
 Mean F1: 0.565
 
-SeqModel (20 epochs, 2048 batch size, Adam lr=0.01, 1 lstm layer)
+Sequential Model
+python evaluate.py experiments/seqmodel/1_lstm_linear_adam_0.01_20_4096_model.pt_embeddings.csv test_simplified.csv
+Loading embeddings ... Done.
 Results based on cross validation on 3983 samples with 5 folds.
-Mean Precision: 0.429
-Mean Recall: 0.763
-Mean F1: 0.549
+Mean Precision: 0.418
+Mean Recall: 0.809
+Mean F1: 0.551
 
 UniModel (universal schema, ranked pairs, 20 epochs, 4096 batch size, Adam lr = 0.01)
 Results based on cross validation on 3983 samples with 5 folds.
@@ -91,16 +93,22 @@ Mean Recall: 0.720
 Mean F1: 0.633
 
 Universal Schema using both entity_pair and entity embeddings (30 epochs, Adam lr=0.01, batchsize 4096)
+ python evaluate.py experiments/unimodel_ent/adam_0.01_amsgrad_30_4096_model.pt_embeddings.csv test_simplified.csv
+Loading embeddings ... Done.
 Results based on cross validation on 3983 samples with 5 folds.
-Mean Precision: 0.479
-Mean Recall: 0.753
-Mean F1: 0.586
+Mean Precision: 0.507
+Mean Recall: 0.796
+Mean F1: 0.618
+
 
 Word2Vec Model using both entity_pair and entity embeddings (40 epochs, Adam 0.01, batch size 4096)
+python evaluate.py experiments/word2vec_ent/adam_0.01_40_4096_model.pt_embeddings_01.csv test_simplified.csv
+Loading embeddings ... Done.
 Results based on cross validation on 3983 samples with 5 folds.
-Mean Precision: 0.513
-Mean Recall: 0.727
-Mean F1: 0.600
+Mean Precision: 0.518
+Mean Recall: 0.777
+Mean F1: 0.621
+
 ```
 
 ### remarks:
