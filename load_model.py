@@ -29,6 +29,7 @@ if __name__ == '__main__':
     path2id = json.load(fp=open(dir + "path2id.json"))
     ent2id = json.load(fp=open(dir + "ent2id.json"))
 
+    # choose a model to load the model and output word embeddings
     m = "w2v_ent"
     if m == "uni":
         from models.uni_model import UniModel
